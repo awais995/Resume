@@ -30,10 +30,10 @@ toggleeducation?.addEventListener('click', () => {
     if (educationSection) {
         if (educationSection.style.display === 'none') {
             educationSection.style.display = 'block';
-            toggleeducation.textContent = 'Hide Skills'
+            toggleeducation.textContent = 'Hide Education'
         } else {
             educationSection.style.display = 'none';
-            toggleeducation.textContent = 'Show Skills'
+            toggleeducation.textContent = 'Show Education'
         }
     }
 });
@@ -49,10 +49,10 @@ toggleexperience?.addEventListener('click', () => {
     if (experienceSection) {
         if (experienceSection.style.display === 'none') {
             experienceSection.style.display = 'block';
-            toggleexperience.textContent = 'Hide Skills'
+            toggleexperience.textContent = 'Hide Experience'
         } else {
             experienceSection.style.display = 'none';
-            toggleexperience.textContent = 'Show Skills'
+            toggleexperience.textContent = 'Show Experience'
         }
     }
 });
