@@ -10,3 +10,29 @@ toggleSkills?.addEventListener('click', () => {
         }
     }
 });
+
+const toggleeducation = document.getElementById('toggle-education');
+const educationSection = document.getElementById('education');
+
+toggleeducation?.addEventListener('click', () => {
+    if (educationSection) {
+        if (educationSection.style.display === 'none') {
+            educationSection.style.display = 'block';
+        } else {
+            educationSection.style.display = 'none';
+        }
+    }
+});
+
+const toggleexperience = document.getElementById('toggle-experience');
+const experienceSection = document.getElementById('work-experience');
+
+toggleexperience?.addEventListener('click', () => {
+    if (experienceSection) {
+        if (experienceSection.style.display === 'none') {
+            experienceSection.style.display = 'block';
+        } else {
+            experienceSection.style.display = 'none';
+        }
+    }
+});
