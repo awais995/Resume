@@ -1,4 +1,4 @@
-*{
+* {
    margin: 0;
    padding: 0;
 }
@@ -7,7 +7,7 @@ body {
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    background-color: #fafafa;
    margin: 0;
-   padding: 0  ;
+   padding: 0;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -17,14 +17,15 @@ body {
 }
 
 .container {
-   background-color: #ffffffff;
+   background-color: #fff;
    border-radius: 10px;
    box-shadow: 1px 10px rgba(0, 0, 0, 0.1);
    padding: 20px;
    max-width: 800px;
-   width: 100vh;
+   width: 100%;
    margin: 20px;
    box-sizing: border-box;
+   flex-direction: column;
    overflow: auto;
 }
 
@@ -35,8 +36,7 @@ h1 {
 
 .form h2 {
    margin-top: 20px;
-   color: #555
-
+   color: #555;
 }
 
 label {
@@ -63,7 +63,7 @@ textarea {
 button {
    margin-top: 20px;
    padding: 10px 20px;
-   background-color: #4cAf50;
+   background-color: #4caf50;
    color: white;
    border: none;
    border-radius: 5px;
@@ -75,7 +75,7 @@ button:hover {
    background-color: #45a049;
 }
 
-.resume-output{
+.resume-output {
    margin-top: 30px;
    padding: 20px;
    background-color: #fafafa;
@@ -84,11 +84,11 @@ button:hover {
    box-sizing: border-box;
 }
 
-.resume-output h2{
+.resume-output h2 {
    color: #333;
 }
 
-.resume-output p{
+.resume-output p {
    color: #555;
 }
 
@@ -97,34 +97,60 @@ button:hover {
    border-radius: 10px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
+   .container {
+      max-width: 90%;
+   }
+
+   h1 {
+      font-size: 2em;
+   }
+
+   input, textarea {
+      font-size: 15px;
+   }
+
+   button {
+      padding: 9px 18px;
+      font-size: 15px;
+   }
+
+   .resume-output h2 {
+      font-size: 1.5em;
+   }
+
+   .resume-output p {
+      font-size: 15px;
+   }
+}
+
+@media (max-width: 768px) {
    .container {
       padding: 10px;
-   }  
-}
+   }
 
-h1 {
-   font-size: 1.5em;
-}
+   h1 {
+      font-size: 1.5em;
+   }
 
-input, textarea {
-   font-size: 14px;
-}
+   input, textarea {
+      font-size: 14px;
+   }
 
-button {
-   padding: 8px 16px;
-   font-size: 14px;
-}
+   button {
+      padding: 8px 16px;
+      font-size: 14px;
+   }
 
-.resume-output {
-   padding: 10px;
-}
+   .resume-output {
+      padding: 10px;
+   }
 
-.resume-output h2 {
-   font-size: 1.2em;
-}
+   .resume-output h2 {
+      font-size: 1.2em;
+   }
 
-.resume-output p {
-   font-size: 14px;
+   .resume-output p {
+      font-size: 14px;
+   }
 }
-
