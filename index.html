@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Resume</title>
+    <title>Editable Resume</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Dynamic Resume</h1>
+        <h1>Editable Resume</h1>
         <form id="resumeForm" class="form">
             <h2>Personal Information</h2>
             
@@ -22,10 +22,10 @@
             <input type="text" id="contact" name="contact" required>
             
             <label for="profilePicture">Profile Picture</label>
-            <input type="text" id="profilePicture" name="profilePicture">
+            <input type="file" id="profilePicture" accept="image/*" name="profilePicture">
+            <img id="profilePicturePreview" src="" alt="Profile Picture Preview">
         
             <h2>Education</h2>
-
             <label for="degree">Degree</label>
             <input type="text" id="degree" name="degree" required>
             
@@ -36,7 +36,6 @@
             <input type="text" id="year" name="year" required>
 
             <h2>Experience</h2>
-
             <label for="jobTitle">Job Title</label>
             <input type="text" id="jobTitle" name="jobTitle" required>
             
