@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 function generateResume() {
     var personalInfo = {
+        username: document.getElementById('username').value,
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         contact: document.getElementById('contact').value,
@@ -43,12 +44,46 @@ function generateResume() {
         workExperience: [workExperience],
         skills: skills,
     };
+    localStorage.setItem("resume-".concat(personalInfo.username), JSON.stringify(resumeData));
     displayResume(resumeData);
 }
+document.addEventListener("DOMContentLoaded", loadResume);
+function getQueryParams() {
+    var params = new URLSearchParams(window.location.search);
+    return {
+        username: params.get('username'),
+    };
+}
+function loadResume() {
+    var username = getQueryParams().username;
+    if (username) {
+        var savedData = localStorage.getItem("resume-".concat(username));
+        if (savedData) {
+            var resumeData = JSON.parse(savedData);
+            displayResume(resumeData);
+        }
+        else {
+            console.log('No resume data found for this user.');
+        }
+    }
+}
+document.addEventListener("DOMContentLoaded", loadResume);
 function displayResume(resumeData) {
     var resumeOutput = document.getElementById('resumeOutput');
     if (resumeOutput) {
-        resumeOutput.innerHTML = "\n            <h2 contenteditable=\"true\" oninput=\"updateField('name', this.innerText)\">".concat(resumeData.personalInfo.name, "</h2>\n            <p><strong>Email:</strong> <span contenteditable=\"true\" oninput=\"updateField('email', this.innerText)\">").concat(resumeData.personalInfo.email, "</span></p>\n            <p><strong>Contact:</strong> <span contenteditable=\"true\" oninput=\"updateField('contact', this.innerText)\">").concat(resumeData.personalInfo.contact, "</span></p>\n            ").concat(resumeData.personalInfo.profilePicture ? "<img src=\"".concat(resumeData.personalInfo.profilePicture, "\" alt=\"Profile Picture\">") : '', "\n            \n            <h3>Education</h3>\n            <p><strong>Degree:</strong> <span contenteditable=\"true\" oninput=\"updateField('degree', this.innerText)\">").concat(resumeData.education[0].degree, "</span></p>\n            <p><strong>Institution:</strong> <span contenteditable=\"true\" oninput=\"updateField('institution', this.innerText)\">").concat(resumeData.education[0].institution, "</span></p>\n            <p><strong>Year of Graduation:</strong> <span contenteditable=\"true\" oninput=\"updateField('year', this.innerText)\">").concat(resumeData.education[0].year, "</span></p>\n\n            <h3>Work Experience</h3>\n            <p><strong>Job Title:</strong> <span contenteditable=\"true\" oninput=\"updateField('jobTitle', this.innerText)\">").concat(resumeData.workExperience[0].jobTitle, "</span></p>\n            <p><strong>Company:</strong> <span contenteditable=\"true\" oninput=\"updateField('company', this.innerText)\">").concat(resumeData.workExperience[0].company, "</span></p>\n            <p><strong>Duration:</strong> <span contenteditable=\"true\" oninput=\"updateField('duration', this.innerText)\">").concat(resumeData.workExperience[0].duration, "</span></p>\n            <p><strong>Description:</strong> <span contenteditable=\"true\" oninput=\"updateField('description', this.innerText)\">").concat(resumeData.workExperience[0].description, "</span></p>\n\n            <h3>Skills</h3>\n            <ul>").concat(resumeData.skills.map(function (skill) { return "<li contenteditable=\"true\" oninput=\"updateSkill(this, '".concat(skill, "')\">").concat(skill.trim(), "</li>"); }).join(''), "</ul>\n        ");
+        resumeOutput.innerHTML = "\n            <h2 contenteditable=\"true\" oninput=\"updateField('name', this.innerText)\">".concat(resumeData.personalInfo.name, "</h2>\n            <p><strong> Email:</strong> <span contenteditable=\"true\" oninput=\"updateField('email', this.innerText)\">").concat(resumeData.personalInfo.email, "</span></p>\n            <p><strong>Contact:</strong> <span contenteditable=\"true\" oninput=\"updateField('contact', this.innerText)\">").concat(resumeData.personalInfo.contact, "</span></p>\n            ").concat(resumeData.personalInfo.profilePicture ? "<img src=\"".concat(resumeData.personalInfo.profilePicture, "\" alt=\"Profile Picture\">") : '', "\n            \n            <h3>Education</h3>\n            <p><strong>Degree:</strong> <span contenteditable=\"true\" oninput=\"updateField('degree', this.innerText)\">").concat(resumeData.education[0].degree, "</span></p>\n            <p><strong>Institution:</strong> <span contenteditable=\"true\" oninput=\"updateField('institution', this.innerText)\">").concat(resumeData.education[0].institution, "</span></p>\n            <p><strong>Year of Graduation:</strong> <span contenteditable=\"true\" oninput=\"updateField('year', this.innerText)\">").concat(resumeData.education[0].year, "</span></p>\n\n            <h3>Work Experience</h3>\n            <p><strong>Job Title:</strong> <span contenteditable=\"true\" oninput=\"updateField('jobTitle', this.innerText)\">").concat(resumeData.workExperience[0].jobTitle, "</span></p>\n            <p><strong>Company:</strong> <span contenteditable=\"true\" oninput=\"updateField('company', this.innerText)\">").concat(resumeData.workExperience[0].company, "</span></p>\n            <p><strong>Duration:</strong> <span contenteditable=\"true\" oninput=\"updateField('duration', this.innerText)\">").concat(resumeData.workExperience[0].duration, "</span></p>\n            <p><strong>Description:</strong> <span contenteditable=\"true\" oninput=\"updateField('description', this.innerText)\">").concat(resumeData.workExperience[0].description, "</span></p>\n\n            <h3>Skills</h3>\n            <ul>").concat(resumeData.skills.map(function (skill) { return "<li contenteditable=\"true\" oninput=\"updateSkill(this, '".concat(skill, "')\">").concat(skill.trim(), "</li>"); }).join(''), "</ul>\n            ");
+        var shareableUrl = "".concat(window.location.origin, "/index.html?uername=").concat(encodeURIComponent(resumeData.personalInfo.username));
+        var link = document.getElementById("ShareableLink");
+        var downloadLink = document.getElementById("downloadlink");
+        var button = document.getElementById("download-pdf");
+        link.style.display = "block";
+        downloadLink.href = shareableUrl;
+        downloadLink.textContent = shareableUrl;
+        //add event listner
+        button.addEventListener('click', function () {
+            window.print();
+        });
+        document.querySelector('.resume-output').style.display = 'block';
     }
 }
 function updateField(field, value) {

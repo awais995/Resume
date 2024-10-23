@@ -1,4 +1,5 @@
 interface PersonalInfo {
+    username:string
     name: string;
     email: string;
     contact: string;
@@ -25,6 +26,8 @@ interface ResumeData {
     skills: string[];
 }
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const profilePictureInput = document.getElementById('profilePicture') as HTMLInputElement;
     const profilePicturePreview = document.getElementById('profilePicturePreview') as HTMLImageElement;
@@ -50,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function generateResume(): void {
     const personalInfo: PersonalInfo = {
+        username: (document.getElementById('username') as HTMLInputElement).value,
         name: (document.getElementById('name') as HTMLInputElement).value,
         email: (document.getElementById('email') as HTMLInputElement).value,
         contact: (document.getElementById('contact') as HTMLInputElement).value,
@@ -77,16 +81,43 @@ function generateResume(): void {
         workExperience: [workExperience],
         skills,
     };
+    localStorage.setItem(`resume-${personalInfo.username}`, JSON.stringify(resumeData));
 
     displayResume(resumeData);
+    
 }
+
+document.addEventListener("DOMContentLoaded", loadResume);
+
+
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        username: params.get('username'),
+    };
+}
+
+function loadResume() {
+    const { username } = getQueryParams();
+    if (username) {
+        const savedData = localStorage.getItem(`resume-${username}`);
+        if (savedData) {
+            const resumeData: ResumeData = JSON.parse(savedData);
+            displayResume(resumeData);
+        } else {
+            console.log('No resume data found for this user.');
+        }
+    }
+}
+document.addEventListener("DOMContentLoaded", loadResume);
+
 
 function displayResume(resumeData: ResumeData): void {
     const resumeOutput = document.getElementById('resumeOutput');
     if (resumeOutput) {
         resumeOutput.innerHTML = `
             <h2 contenteditable="true" oninput="updateField('name', this.innerText)">${resumeData.personalInfo.name}</h2>
-            <p><strong>Email:</strong> <span contenteditable="true" oninput="updateField('email', this.innerText)">${resumeData.personalInfo.email}</span></p>
+            <p><strong> Email:</strong> <span contenteditable="true" oninput="updateField('email', this.innerText)">${resumeData.personalInfo.email}</span></p>
             <p><strong>Contact:</strong> <span contenteditable="true" oninput="updateField('contact', this.innerText)">${resumeData.personalInfo.contact}</span></p>
             ${resumeData.personalInfo.profilePicture ? `<img src="${resumeData.personalInfo.profilePicture}" alt="Profile Picture">` : ''}
             
@@ -103,7 +134,23 @@ function displayResume(resumeData: ResumeData): void {
 
             <h3>Skills</h3>
             <ul>${resumeData.skills.map(skill => `<li contenteditable="true" oninput="updateSkill(this, '${skill}')">${skill.trim()}</li>`).join('')}</ul>
-        `;
+            `;
+           
+            const shareableUrl = `${window.location.origin}/index.html?uername=${encodeURIComponent(resumeData.personalInfo.username)}`
+            const link = document.getElementById("ShareableLink") as HTMLDivElement;
+            const downloadLink = document.getElementById("downloadlink") as HTMLAnchorElement;
+            const button = document.getElementById("download-pdf") as HTMLButtonElement;
+
+            link.style.display = "block";
+            downloadLink.href = shareableUrl;
+            downloadLink.textContent = shareableUrl;
+
+            //add event listner
+            button.addEventListener('click', () => {
+                window.print();
+            });
+
+            (document.querySelector('.resume-output')as HTMLElement).style.display = 'block';
     }
 }
 

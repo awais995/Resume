@@ -3,60 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Resume</title>
+    <title>Resume Builder</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Editable Resume</h1>
         <form id="resumeForm" class="form">
-            <h2>Personal Information</h2>
-            
+            <h1>Personal Information</h1>
+
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Username" required>
+
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-            
+            <input type="text" id="name" placeholder="Name" required>
+
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-            
+            <input type="email" id="email" placeholder="Email" required>
+
             <label for="contact">Contact</label>
-            <input type="text" id="contact" name="contact" required>
-            
+            <input type="text" id="contact" placeholder="Contact" required>
+
             <label for="profilePicture">Profile Picture</label>
-            <input type="file" id="profilePicture" accept="image/*" name="profilePicture">
-            <img id="profilePicturePreview" src="" alt="Profile Picture Preview">
-        
+            <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+            <img id="profilePicturePreview" style="display:none; max-width:150px; margin-top:10px;" />
+
             <h2>Education</h2>
             <label for="degree">Degree</label>
             <input type="text" id="degree" name="degree" required>
-            
+
             <label for="institution">Institution</label>
             <input type="text" id="institution" name="institution" required>
-            
-            <label for="year">Year</label>
+
+            <label for="year">Year of Graduation</label>
             <input type="text" id="year" name="year" required>
 
-            <h2>Experience</h2>
+            <h2>Work Experience</h2>
             <label for="jobTitle">Job Title</label>
             <input type="text" id="jobTitle" name="jobTitle" required>
-            
+
             <label for="company">Company</label>
             <input type="text" id="company" name="company" required>
-            
+
             <label for="duration">Duration</label>
             <input type="text" id="duration" name="duration" required>
 
             <label for="description">Description</label>
             <textarea id="description" name="description" required></textarea>
-            
+
             <h2>Skills</h2>
-            
-            <label for="skills">Skills (comma-separated)</label>
+            <label for="skills">Skills (comma separated)</label>
             <input type="text" id="skills" name="skills" required>
-            
+
             <button type="button" onclick="generateResume()">Generate Resume</button>
         </form>
 
         <div id="resumeOutput" class="resume-output"></div>
+
+        <div class="sharelink" id="ShareableLink" style="display: none;">
+            <h3>Shareable Link</h3>
+            <p>Here is your link:</p>
+            <a href="#" id="downloadlink" target="_blank"></a>
+            <button id="download-pdf">Download</button>
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
